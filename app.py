@@ -22,7 +22,7 @@ def hello_world():
 
 # post a composed info to 3 microservices synchronously
 @app.route('/composer/sync', methods=['POST'])
-def post_all():
+def post_all_sync():
     if request.method == 'POST':
         create_data = request.form
         if create_data:
@@ -35,7 +35,7 @@ def post_all():
 
 # post a composed info to 3 microservices asynchronously
 @app.route('/composer/async', methods=['POST'])
-def post_all():
+def post_all_async():
     if request.method == 'POST':
         create_data = request.form
         if create_data:
