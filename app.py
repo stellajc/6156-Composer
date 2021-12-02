@@ -2,7 +2,9 @@ from flask import Flask, Response, request
 from flask_cors import CORS
 import json
 import logging
-import re
+import time
+import asyncio
+
 
 from application_services.Sync.sync_service import SyncService
 from application_services.Async.async_service import AsyncService
@@ -14,6 +16,7 @@ logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 CORS(app)
+
 
 @app.route('/')
 def hello_world():
@@ -42,8 +45,11 @@ def post_all_async():
             pass
         else:
             create_data = request.json[0]
-        res = AsyncService.postall(create_data)
-        rsp = Response(json.dumps(res, default=str), status=200, content_type="application/json")
+        s = time.perf_counter()
+        asyncio.run(AsyncService.postall(dict(create_data)))
+        elapsed = time.perf_counter() - s
+        print(f"Executed in {elapsed:0.2f} seconds.")
+        rsp = Response(json.dumps("success", default=str), status=201, content_type="application/json")
         return rsp
 
 if __name__ == '__main__':
