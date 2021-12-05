@@ -17,7 +17,7 @@ async def post_game(data):
     for k in data:
         if k in game_keys:
             req_dict[k] = data[k]
-    url = "http://6156game-env.eba-xtamzhzp.us-east-2.elasticbeanstalk.com/Game"
+    url = "https://wx2fcbv9l0.execute-api.us-east-2.amazonaws.com/Game"
     r = requests.post(url, files=req_dict)
     return r.status_code == 201
 
@@ -35,7 +35,7 @@ async def post_user(data):
     req_dict['id'] = data['user_id']
     req_dict['addressID'] = data['addr_id']
 
-    url = "http://52.15.243.33:5000/users"
+    url = "https://wx2fcbv9l0.execute-api.us-east-2.amazonaws.com/users"
     r = requests.post(url, files=req_dict)
     return r.status_code == 201
 
@@ -55,7 +55,7 @@ async def post_addr(data):
     for k in data:
         if k in addr_keys:
             req_dict[k] = data[k]
-    url = "http://52.15.243.33:5000/addresses"
+    url = "https://wx2fcbv9l0.execute-api.us-east-2.amazonaws.com/addresses"
     r = requests.post(url, files=req_dict)
     return r.status_code == 201
 
@@ -74,7 +74,7 @@ async def post_forum(data):
     req_dict['userID'] = data['user_id']
     req_dict['gameID'] = data['Game_id']
 
-    url = "http://3.140.248.102:5000/forums"
+    url = "https://wx2fcbv9l0.execute-api.us-east-2.amazonaws.com/forums"
     r = requests.post(url, files=req_dict)
     return r.status_code == 201
 
