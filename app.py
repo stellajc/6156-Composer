@@ -30,7 +30,7 @@ def post_all_sync():
         else:
             create_data = request.json[0]
         res = SyncService.postall(create_data)
-        rsp = Response(json.dumps(res, default=str), status=200, content_type="application/json")
+        rsp = Response(json.dumps(res, default=str), status=201, content_type="application/json")
         return rsp
 
 # post a composed info to 3 microservices asynchronously
