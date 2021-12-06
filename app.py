@@ -32,9 +32,19 @@ def post_all_sync():
             pass
         else:
             create_data = request.json[0]
-        res = SyncService.postall(create_data)
-        rsp = Response(json.dumps(res, default=str), status=201, content_type="application/json")
-        return rsp
+        # res = SyncService.postall(create_data)
+
+        res_game, game_id = SyncService.postGame(create_data)
+        if res_game.status_code!= 201:
+            return res_game
+        res_forum = SyncService.postForum(create_data, game_id)
+        if res_forum.status_code == 201:
+            return Response(json.dumps({"game_id": game_id,"forum_id": int(create_data["f_id"])}, default=str, indent=4), status=201,
+                               content_type="application/json")
+        else:
+            return res_forum
+
+
 
 # post a composed info to 3 microservices asynchronously
 @app.route('/composer/async', methods=['POST'])
